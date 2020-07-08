@@ -4,7 +4,7 @@ go 1.14
 
 require (
 	github.com/gin-gonic/gin v1.6.3
-	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
-	go.mongodb.org/mongo-driver v1.3.4
-	golang.org/x/crypto v0.0.0-20190530122614-20be4c3c3ed5
+	github.com/go-playground/validator/v10 v10.3.0
+	go.mongodb.org/mongo-driver v1.3.5
+	golang.org/x/crypto v0.0.0-20200707235045-ab33eee955e0
 )

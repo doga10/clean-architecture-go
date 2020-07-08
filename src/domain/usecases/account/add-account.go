@@ -1,14 +1,13 @@
 package account
 
 import (
-	"github.com/go-ozzo/ozzo-validation"
-	"github.com/go-ozzo/ozzo-validation/is"
+	"github.com/go-playground/validator/v10"
 )
 
 type AddAccountParams struct {
-	Name      string    `bson:"name" json:"name"`
-	Email     string    `bson:"email" json:"email"`
-	Password  string    `bson:"password" json:"password"`
+	Name      string    `bson:"name" json:"name" validate:"required"`
+	Email     string    `bson:"email" json:"email" validate:"required,email"`
+	Password  string    `bson:"password" json:"password" validate:"required"`
 }
 
 type AddAccount interface {
@@ -16,8 +15,10 @@ type AddAccount interface {
 }
 
 func (u AddAccountParams) Validate() error {
-	return validation.ValidateStruct(&u,
-		validation.Field(&u.Name, validation.Required),
-		validation.Field(&u.Email, validation.Required, is.Email),
-		validation.Field(&u.Password, validation.Required))
+	validate := validator.New()
+	err := validate.Struct(u)
+	if err != nil {
+		return err
+	}
+	return nil
 }
