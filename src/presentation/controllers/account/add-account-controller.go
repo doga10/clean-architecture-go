@@ -13,11 +13,13 @@ type AddAccountController interface {
 
 type controller struct {
 	account.AddAccount
+	protocols.Validation
 }
 
-func NewAddAccountController(add account.AddAccount) AddAccountController {
+func NewAddAccountController(add account.AddAccount, v protocols.Validation) AddAccountController {
 	return &controller{
 		add,
+		v,
 	}
 }
 
@@ -33,7 +35,7 @@ func (c *controller) Handle(req protocols.Request) protocols.Response {
 		return protocols.Response{500, err.Error()}
 	}
 
-	err = addAccountParams.Validate()
+	err = c.Validate(addAccountParams)
 	if err != nil {
 		return protocols.Response{400, err.Error()}
 	}
