@@ -33,6 +33,11 @@ func (c *controller) Handle(req protocols.Request) protocols.Response {
 		return protocols.Response{500, err.Error()}
 	}
 
+	err = addAccountParams.Validate()
+	if err != nil {
+		return protocols.Response{400, err.Error()}
+	}
+
 	addAccount, err := c.Add(addAccountParams)
 	if err != nil {
 		return protocols.Response{500, err.Error()}

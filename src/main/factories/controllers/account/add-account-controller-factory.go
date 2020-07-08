@@ -16,5 +16,6 @@ func MakeAddAccountController() protocols.Controller {
 	repo := account2.NewAccountMongoRepository(collection)
 	load_account_by_email.NewDbLoadAccountByEmail(repo)
 	svc := add_account.NewDbAddAccount(repo, repo, crypt)
+
 	return account.NewAddAccountController(svc)
 }
