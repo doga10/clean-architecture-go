@@ -13,9 +13,7 @@ var (
 	Db *mongo.Database
 )
 
-type MongoDB struct {}
-
-func (m *MongoDB) Connect(url string, name string) error {
+func Connect(url string, name string) error {
 	Url = url
 	DbName = name
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -24,7 +22,6 @@ func (m *MongoDB) Connect(url string, name string) error {
 	if err != nil {
 		return err
 	}
-
 	Db = client.Database(name)
 	return nil
 }
