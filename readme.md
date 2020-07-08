@@ -14,6 +14,12 @@ API Rest service using designer pattern with golang as Clean Architecture, SOLID
 - mongo-driver
 - crypto
 
+> #### Run Tests
+
+- Run command `go test -cover ./...`
+- Run command `go test -cover -coverprofile=c.out ./...`
+- Run command `go tool cover -html=c.out -o coverage.html`
+
 > #### Start Project
 
 - Run command `docker-compose up -d`

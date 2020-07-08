@@ -7,3 +7,5 @@ server
 *.exe
 .enva
 .DS_store
+*.out
+coverage.html
