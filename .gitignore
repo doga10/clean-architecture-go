@@ -1,0 +1,9 @@
+node_modules
+.idea
+.docker
+vendor
+
+server
+*.exe
+.enva
+.DS_store

@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      MONGO_URL: "mongodb://mongo:27017"
+      MONGO_NAME: "app"
+      APP_ENV: "release"
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:4.2
+    ports:
+      - "27017:27017"
+    restart: always
+    volumes:
+      - ./.docker/data:/data/db
