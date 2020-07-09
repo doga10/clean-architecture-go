@@ -8,7 +8,6 @@ import (
 	"github.com/doga10/clean-architecture-go/src/domain/usecases/account"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	"time"
 )
 
 type AccountMongoRepository interface {
@@ -27,8 +26,7 @@ func NewAccountMongoRepository(collection *mongo.Collection) AccountMongoReposit
 }
 
 func (r *repo) Add(accountData *account.AddAccountParams) (interface{}, error) {
-	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
-	element, err := r.collection.InsertOne(ctx, accountData)
+	element, err := r.collection.InsertOne(context.TODO(), accountData)
 	if err != nil {
 		return nil, err
 	}
@@ -38,8 +36,7 @@ func (r *repo) Add(accountData *account.AddAccountParams) (interface{}, error) {
 
 func (r *repo) LoadByEmail(email string) (*models.AccountModel, error) {
 	var element *models.AccountModel
-	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
-	err := r.collection.FindOne(ctx, bson.M{"email": email}).Decode(&element)
+	err := r.collection.FindOne(context.TODO(), bson.M{"email": email}).Decode(&element)
 	if err != nil {
 		if err.Error() == "mongo: no documents in result" {
 			return nil, nil

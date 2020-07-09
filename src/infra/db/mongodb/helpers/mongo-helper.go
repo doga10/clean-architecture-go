@@ -10,6 +10,7 @@ import (
 var (
 	Url string
 	DbName string
+	Client *mongo.Client
 	Db *mongo.Database
 )
 
@@ -22,6 +23,7 @@ func Connect(url string, name string) error {
 	if err != nil {
 		return err
 	}
+	Client = client
 	Db = client.Database(name)
 	return nil
 }

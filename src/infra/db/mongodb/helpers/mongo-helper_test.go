@@ -8,6 +8,9 @@ func TestConnect(t *testing.T) {
 	if Db != nil {
 		t.Errorf("variable Db not empty")
 	}
+	if Client != nil {
+		t.Errorf("variable Client not empty")
+	}
 	if DbName != "" {
 		t.Errorf("variable DbName not empty")
 	}
@@ -20,6 +23,9 @@ func TestConnect(t *testing.T) {
 		t.Errorf("error connect mongodb %v", err)
 	}
 
+	if Client == nil {
+		t.Errorf("variable Client not empty")
+	}
 	if Db == nil {
 		t.Errorf("variable Db empty")
 	}
@@ -35,6 +41,9 @@ func TestConnectError(t *testing.T) {
 	if Db == nil {
 		t.Errorf("variable Db not empty")
 	}
+	if Client == nil {
+		t.Errorf("variable Client not empty")
+	}
 	if DbName == "" {
 		t.Errorf("variable DbName not empty")
 	}
@@ -49,6 +58,9 @@ func TestConnectError(t *testing.T) {
 
 	if Db == nil {
 		t.Errorf("variable Db not empty")
+	}
+	if Client == nil {
+		t.Errorf("variable Client not empty")
 	}
 	if DbName != "" {
 		t.Errorf("variable DbName not empty")
