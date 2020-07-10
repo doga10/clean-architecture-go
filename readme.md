@@ -9,10 +9,12 @@ API Rest service using designer pattern with golang as Clean Architecture, SOLID
 
 > #### Used Libraries
 
-- gin framework
-- validator
-- mongo-driver
-- crypto
+- github.com/bxcodec/faker/v3
+- github.com/gin-gonic/gin
+- github.com/go-playground/validator/v10
+- github.com/stretchr/testify
+- go.mongodb.org/mongo-driver
+- golang.org/x/crypto
 
 > #### Run Tests
 
