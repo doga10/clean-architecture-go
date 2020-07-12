@@ -7,6 +7,7 @@ import (
 	crypto "github.com/doga10/clean-architecture-go/src/infra/criptography/bcrypt-adapter"
 	account2 "github.com/doga10/clean-architecture-go/src/infra/db/mongodb/account"
 	"github.com/doga10/clean-architecture-go/src/infra/db/mongodb/helpers"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -23,59 +24,29 @@ func AddAccountSpy() DbAddAccount {
 
 func TestNewDbAddAccount(t *testing.T) {
 	test := AddAccountSpy()
-	if test == nil {
-		t.Error("error start module add account")
-	}
+	assert.NotNil(t, test)
 }
 
 func TestSvc_Add(t *testing.T) {
 	test := AddAccountSpy()
-	if test == nil {
-		t.Error("error start module add account")
-	}
+	assert.NotNil(t, test)
 
 	var add account.AddAccountParams
 	err := faker.FakeData(&add)
 	if err != nil {
 		fmt.Println(err)
-	}
-
-	collection := helpers.GetCollection("accounts")
-	repo := account2.NewAccountMongoRepository(collection)
-	cur, err := repo.LoadByEmail(add.Email)
-	if cur != nil {
-		t.Error("error register user")
 	}
 
 	crypt := crypto.NewBcryptAdapter()
 	pass, err := crypt.Hash(add.Password)
-	if err != nil {
-		t.Errorf("erro crypt pass %v", err)
-	}
+	assert.Nil(t, err)
 	add.Password = pass
 
-	_, _ = test.Add(&add)
-}
+	cur, err := test.Add(&add)
+	assert.NotNil(t, cur)
+	assert.Nil(t, err)
 
-func TestSvc_AddError(t *testing.T) {
-	test := AddAccountSpy()
-	if test == nil {
-		t.Error("error start module add account")
-	}
-
-	var add account.AddAccountParams
-	err := faker.FakeData(&add)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	collection := helpers.GetCollection("accounts")
-	repo := account2.NewAccountMongoRepository(collection)
-	cur, err := repo.LoadByEmail(add.Email)
-	if cur != nil {
-		t.Error("not found user")
-	}
-	if err != nil {
-		t.Errorf(err.Error())
-	}
+	cur2, err := test.Add(&add)
+	assert.Nil(t, cur2)
+	assert.NotNil(t, err)
 }

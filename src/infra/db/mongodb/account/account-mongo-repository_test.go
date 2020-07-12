@@ -2,8 +2,10 @@ package account
 
 import (
 	"fmt"
+	"github.com/bxcodec/faker/v3"
 	"github.com/doga10/clean-architecture-go/src/domain/usecases/account"
 	"github.com/doga10/clean-architecture-go/src/infra/db/mongodb/helpers"
+	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/mongo"
 	"testing"
 )
@@ -17,75 +19,43 @@ func Connect() *mongo.Collection {
 }
 
 func TestNewAccountMongoRepository(t *testing.T) {
-	t.Parallel()
 	collection := Connect()
 	repo := NewAccountMongoRepository(collection)
-	if repo == nil {
-		t.Errorf("error class NewAccountMongoRepository %v", repo)
-	}
+	assert.NotNil(t, repo)
 }
 
 func TestRepo_Add(t *testing.T) {
-	t.Parallel()
 	collection := Connect()
 	repo := NewAccountMongoRepository(collection)
-	if repo == nil {
-		t.Errorf("error class NewAccountMongoRepository %v", repo)
-	}
+
 	var add account.AddAccountParams
-	add.Name = "test"
-	add.Email = "test@test.com"
-	add.Password = "password"
-	_, err := repo.Add(&add)
+	err := faker.FakeData(&add)
 	if err != nil {
-		t.Errorf("error add account %v", err)
+		fmt.Println(err)
 	}
+	cur, err := repo.Add(&add)
+	assert.NotNil(t, cur)
+	assert.Nil(t, err)
 }
 
 func TestRepo_LoadByEmail(t *testing.T) {
-	t.Parallel()
 	collection := Connect()
 	repo := NewAccountMongoRepository(collection)
-	if repo == nil {
-		t.Errorf("error class NewAccountMongoRepository %v", repo)
-	}
+
 	var add account.AddAccountParams
-	add.Name = "test"
-	add.Email = "test@test.com"
-	add.Password = "password"
-	_, err := repo.Add(&add)
+	err := faker.FakeData(&add)
 	if err != nil {
-		t.Errorf("error add account %v", err)
+		fmt.Println(err)
 	}
 
-	_, err = repo.LoadByEmail(add.Email)
-	if err != nil {
-		t.Errorf("error load account by email %v", err)
-	}
-}
+	_, err = repo.Add(&add)
+	assert.Nil(t, err)
 
-func TestRepo_LoadByEmailError(t *testing.T) {
-	t.Parallel()
-	collection := Connect()
-	repo := NewAccountMongoRepository(collection)
-	if repo == nil {
-		t.Errorf("error class NewAccountMongoRepository %v", repo)
-	}
-	var add account.AddAccountParams
-	add.Name = "test"
-	add.Email = "test@test.com"
-	add.Password = "password"
-	_, err := repo.Add(&add)
-	if err != nil {
-		t.Errorf("error add account %v", err)
-	}
+	cur, err := repo.LoadByEmail(add.Email)
+	assert.NotNil(t, cur)
+	assert.Nil(t, err)
 
-	_, err = repo.LoadByEmail(add.Name)
-	if err != nil {
-		t.Errorf("error param load account by email  %v", err)
-	}
-
-	cur, err := repo.LoadByEmail("")
-	fmt.Println(cur)
-	fmt.Println(err)
+	cur2, err := repo.LoadByEmail(add.Name)
+	assert.Nil(t, cur2)
+	assert.Nil(t, err)
 }
