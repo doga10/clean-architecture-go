@@ -10,12 +10,6 @@ import (
 	"testing"
 )
 
-type AddAccountParams struct {
-	Name     string `bson:"name" json:"name" validate:"required" fake:"name"`
-	Email    string `bson:"email" json:"email" validate:"required,email" fake:"email"`
-	Password string `bson:"password" json:"password" validate:"required" fake:"name"`
-}
-
 func LoadAccountByIdControllerSpy() LoadAccountByIdController {
 	err := helpers.Connect("mongodb://127.0.0.1:27017", "app")
 	if err != nil {
@@ -32,7 +26,6 @@ func TestNewLoadAccountByIdController(t *testing.T) {
 	controller := LoadAccountByIdControllerSpy()
 	assert.NotNil(t, controller)
 }
-
 
 func TestController_Handle(t *testing.T) {
 	var req protocols.Request

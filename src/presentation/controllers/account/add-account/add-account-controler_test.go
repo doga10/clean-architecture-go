@@ -6,6 +6,7 @@ import (
 	"github.com/bxcodec/faker/v3"
 	add_account "github.com/doga10/clean-architecture-go/src/data/usecases/account/add-account"
 	load_account_by_email "github.com/doga10/clean-architecture-go/src/data/usecases/account/load-account-by-email"
+	"github.com/doga10/clean-architecture-go/src/domain/usecases/account"
 	bcrypt_adapter "github.com/doga10/clean-architecture-go/src/infra/criptography/bcrypt-adapter"
 	account2 "github.com/doga10/clean-architecture-go/src/infra/db/mongodb/account"
 	"github.com/doga10/clean-architecture-go/src/infra/db/mongodb/helpers"
@@ -14,12 +15,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
-
-type AddAccountParams struct {
-	Name     string `bson:"name" json:"name" validate:"required" fake:"name"`
-	Email    string `bson:"email" json:"email" validate:"required,email" fake:"email"`
-	Password string `bson:"password" json:"password" validate:"required" fake:"name"`
-}
 
 func AddAccountControllerSpy() AddAccountController {
 	err := helpers.Connect("mongodb://127.0.0.1:27017", "app")
@@ -43,7 +38,7 @@ func TestNewAddAccountController(t *testing.T) {
 
 func TestController_Handle(t *testing.T) {
 	var req protocols.Request
-	var body AddAccountParams
+	var body account.AddAccountParams
 	err := faker.FakeData(&body)
 	if err != nil {
 		fmt.Println(err)
@@ -61,7 +56,7 @@ func TestController_Handle(t *testing.T) {
 
 func TestController_HandleNotValid(t *testing.T) {
 	var req protocols.Request
-	var body AddAccountParams
+	var body account.AddAccountParams
 	err := faker.FakeData(&body)
 	if err != nil {
 		fmt.Println(err)
