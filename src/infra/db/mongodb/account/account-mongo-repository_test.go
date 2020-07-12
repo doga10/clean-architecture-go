@@ -6,6 +6,7 @@ import (
 	"github.com/doga10/clean-architecture-go/src/domain/usecases/account"
 	"github.com/doga10/clean-architecture-go/src/infra/db/mongodb/helpers"
 	"github.com/stretchr/testify/assert"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"testing"
 )
@@ -56,6 +57,28 @@ func TestRepo_LoadByEmail(t *testing.T) {
 	assert.Nil(t, err)
 
 	cur2, err := repo.LoadByEmail(add.Name)
+	assert.Nil(t, cur2)
+	assert.Nil(t, err)
+}
+
+func TestRepo_LoadById(t *testing.T) {
+	collection := Connect()
+	repo := NewAccountMongoRepository(collection)
+
+	var add account.AddAccountParams
+	err := faker.FakeData(&add)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	result, err := repo.Add(&add)
+	assert.Nil(t, err)
+
+	cur, err := repo.LoadById(result.(primitive.ObjectID).Hex())
+	assert.NotNil(t, cur)
+	assert.Nil(t, err)
+
+	cur2, err := repo.LoadById(add.Name)
 	assert.Nil(t, cur2)
 	assert.Nil(t, err)
 }

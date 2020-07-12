@@ -1,7 +1,8 @@
-package account
+package add_account
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/doga10/clean-architecture-go/src/domain/usecases/account"
 	"github.com/doga10/clean-architecture-go/src/presentation/protocols"
 )

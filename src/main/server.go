@@ -3,11 +3,10 @@ package main
 import (
 	"github.com/doga10/clean-architecture-go/src/infra/db/mongodb/helpers"
 	"github.com/doga10/clean-architecture-go/src/main/config"
-	"os"
 )
 
 func main() {
-	err := helpers.Connect(os.Getenv("MONGO_URL"), os.Getenv("MONGO_NAME"))
+	err := helpers.Connect("mongodb://127.0.0.1:27017", "app")
 	if err != nil {
 		panic(err)
 	}

@@ -1,4 +1,4 @@
-package account
+package add_account
 
 import (
 	"encoding/json"

@@ -8,4 +8,5 @@ import (
 
 func AccountRouter(router gin.IRouter) {
 	router.POST("/v1/accounts", adapters.AdaptRouter(account.MakeAddAccountController()))
+	router.POST("/v1/accounts/:id", adapters.AdaptRouter(account.MakeAddAccountController()))
 }

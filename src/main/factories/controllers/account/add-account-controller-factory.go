@@ -6,7 +6,7 @@ import (
 	bcrypt_adapter "github.com/doga10/clean-architecture-go/src/infra/criptography/bcrypt-adapter"
 	account2 "github.com/doga10/clean-architecture-go/src/infra/db/mongodb/account"
 	"github.com/doga10/clean-architecture-go/src/infra/db/mongodb/helpers"
-	"github.com/doga10/clean-architecture-go/src/presentation/controllers/account"
+	add_account2 "github.com/doga10/clean-architecture-go/src/presentation/controllers/account/add-account"
 	"github.com/doga10/clean-architecture-go/src/presentation/protocols"
 )
 
@@ -17,5 +17,5 @@ func MakeAddAccountController() protocols.Controller {
 	load_account_by_email.NewDbLoadAccountByEmail(repo)
 	svc := add_account.NewDbAddAccount(repo, repo, crypt)
 
-	return account.NewAddAccountController(svc, MakeAddAccountValidation())
+	return add_account2.NewAddAccountController(svc, MakeAddAccountValidation())
 }
