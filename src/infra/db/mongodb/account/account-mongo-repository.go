@@ -27,22 +27,14 @@ func NewAccountMongoRepository(collection *mongo.Collection) AccountMongoReposit
 
 func (r *repo) Add(accountData *account.AddAccountParams) (interface{}, error) {
 	element, err := r.collection.InsertOne(context.TODO(), accountData)
-	if err != nil {
-		return nil, err
-	}
-
-	return element, nil
+	return element, err
 }
 
 func (r *repo) LoadByEmail(email string) (*models.AccountModel, error) {
 	var element *models.AccountModel
 	err := r.collection.FindOne(context.TODO(), bson.M{"email": email}).Decode(&element)
-	if err != nil {
-		if err.Error() == "mongo: no documents in result" {
-			return nil, nil
-		}
-		return nil, err
+	if err != nil && err.Error() == "mongo: no documents in result" {
+		return nil, nil
 	}
-
-	return element, nil
+	return element, err
 }

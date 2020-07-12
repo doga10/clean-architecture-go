@@ -35,11 +35,7 @@ func (s *svc) Add(accountData *account.AddAccountParams) (interface{}, error) {
 		password, err := s.crypto.Hash(accountData.Password)
 		accountData.Password = password
 		element, err := s.add.Add(accountData)
-		if err != nil {
-			return nil, err
-		}
-
-		return element, nil
+		return element, err
 	}
 
 	return nil, errors.New("E-mail já registrado")

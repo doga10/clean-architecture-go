@@ -22,9 +22,5 @@ func NewDbLoadAccountByEmail(function load.LoadAccountByIdRepository) DbLoadAcco
 
 func (s *svc) LoadByEmail(email string) (*models.AccountModel, error) {
 	element, err := s.loadByEmail.LoadByEmail(email)
-	if err != nil {
-		return nil, err
-	}
-
-	return element, nil
+	return element, err
 }
