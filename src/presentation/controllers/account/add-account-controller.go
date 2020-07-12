@@ -24,12 +24,9 @@ func NewAddAccountController(add account.AddAccount, v protocols.Validation) Add
 
 func (c *controller) Handle(req protocols.Request) protocols.Response {
 	var addAccountParams *account.AddAccountParams
-	err := json.Unmarshal(req.Body, &addAccountParams)
-	if err != nil {
-		return protocols.Response{500, err.Error()}
-	}
+	_ = json.Unmarshal(req.Body, &addAccountParams)
 
-	err = c.Validate(addAccountParams)
+	err := c.Validate(addAccountParams)
 	if err != nil {
 		return protocols.Response{400, err.Error()}
 	}
