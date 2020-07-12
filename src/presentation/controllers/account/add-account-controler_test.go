@@ -1,7 +1,6 @@
 package account
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/bxcodec/faker/v3"
@@ -13,7 +12,6 @@ import (
 	"github.com/doga10/clean-architecture-go/src/infra/validator"
 	"github.com/doga10/clean-architecture-go/src/presentation/protocols"
 	"github.com/stretchr/testify/assert"
-	"io/ioutil"
 	"testing"
 )
 
@@ -53,10 +51,9 @@ func TestController_Handle(t *testing.T) {
 	body.Email = body.Email + "@gmail.com"
 	controller := AddAccountControllerSpy()
 	b, err := json.Marshal(body)
-	if err != nil {
-		fmt.Println(err)
-	}
-	req.Body = ioutil.NopCloser(bytes.NewReader(b))
+	assert.Nil(t, err)
+	req.Body = b
+
 	res := controller.Handle(req)
 	assert.NotNil(t, res)
 	assert.Equal(t, res.Code, 201)
@@ -71,10 +68,9 @@ func TestController_HandleNotValid(t *testing.T) {
 	}
 	controller := AddAccountControllerSpy()
 	b, err := json.Marshal(body)
-	if err != nil {
-		fmt.Println(err)
-	}
-	req.Body = ioutil.NopCloser(bytes.NewReader(b))
+	assert.Nil(t, err)
+	req.Body = b
+
 	res := controller.Handle(req)
 	assert.NotNil(t, res)
 	assert.Equal(t, res.Code, 400)

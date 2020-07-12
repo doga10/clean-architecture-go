@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/doga10/clean-architecture-go/src/domain/usecases/account"
 	"github.com/doga10/clean-architecture-go/src/presentation/protocols"
-	"io/ioutil"
 )
 
 type AddAccountController interface {
@@ -25,12 +24,7 @@ func NewAddAccountController(add account.AddAccount, v protocols.Validation) Add
 
 func (c *controller) Handle(req protocols.Request) protocols.Response {
 	var addAccountParams *account.AddAccountParams
-	parser, err := ioutil.ReadAll(req.Body)
-	if err != nil {
-		return protocols.Response{500, err.Error()}
-	}
-
-	err = json.Unmarshal(parser, &addAccountParams)
+	err := json.Unmarshal(req.Body, &addAccountParams)
 	if err != nil {
 		return protocols.Response{500, err.Error()}
 	}
