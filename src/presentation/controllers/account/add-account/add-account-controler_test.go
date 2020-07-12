@@ -70,3 +70,22 @@ func TestController_HandleNotValid(t *testing.T) {
 	assert.NotNil(t, res)
 	assert.Equal(t, res.Code, 400)
 }
+
+func TestController_HandleError(t *testing.T) {
+	var req protocols.Request
+	var body account.AddAccountParams
+	err := faker.FakeData(&body)
+	if err != nil {
+		fmt.Println(err)
+	}
+	body.Email = body.Email + "@gmail.com"
+	controller := AddAccountControllerSpy()
+	b, err := json.Marshal(body)
+	assert.Nil(t, err)
+	req.Body = b
+
+	_ = controller.Handle(req)
+	res := controller.Handle(req)
+	assert.NotNil(t, res)
+	assert.Equal(t, res.Code, 500)
+}
