@@ -62,7 +62,7 @@ func TestController_Handle(t *testing.T) {
 	assert.Equal(t, res.Code, 201)
 }
 
-func TestController_HandleError(t *testing.T) {
+func TestController_HandleNotValid(t *testing.T) {
 	var req protocols.Request
 	var body AddAccountParams
 	err := faker.FakeData(&body)

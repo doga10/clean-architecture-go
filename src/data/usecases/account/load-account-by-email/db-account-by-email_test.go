@@ -25,16 +25,12 @@ func LoadAccountByEmailSpy() DbLoadAccountByEmail {
 
 func TestNewDbLoadAccountByEmail(t *testing.T) {
 	repo := LoadAccountByEmailSpy()
-	if repo == nil {
-		t.Error("error start module add account")
-	}
+	assert.NotNil(t, repo)
 }
 
 func TestSvc_LoadByEmail(t *testing.T) {
 	repo := LoadAccountByEmailSpy()
-	if repo == nil {
-		t.Error("error start module add account")
-	}
+	assert.NotNil(t, repo)
 
 	cur, err := repo.LoadByEmail("t20@test.com")
 	assert.Nil(t, err)
