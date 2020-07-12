@@ -18,9 +18,9 @@ func NewLoadAccountByIdController(load account.LoadAccountById) LoadAccountByIdC
 }
 
 func (c *controller) Handle(req protocols.Request) protocols.Response {
-	addAccount, err := c.LoadById(req.Params.Param("id"))
+	load, err := c.LoadById(req.Params.ByName("id"))
 	if err != nil {
 		return protocols.Response{500, err.Error()}
 	}
-	return protocols.Response{200, addAccount}
+	return protocols.Response{200, load}
 }

@@ -11,7 +11,7 @@ func AdaptRouter(controller protocols.Controller) gin.HandlerFunc {
 		var req protocols.Request
 		body, _ := ioutil.ReadAll(c.Request.Body)
 		req.Body = body
-		req.Params = c
+		req.Params = c.Params
 		req.Headers = c.Request.Header
 
 		res := controller.Handle(req)

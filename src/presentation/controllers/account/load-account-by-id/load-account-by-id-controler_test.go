@@ -5,6 +5,7 @@ import (
 	load_account_by_id2 "github.com/doga10/clean-architecture-go/src/data/usecases/account/load-account-by-id"
 	account2 "github.com/doga10/clean-architecture-go/src/infra/db/mongodb/account"
 	"github.com/doga10/clean-architecture-go/src/infra/db/mongodb/helpers"
+	"github.com/doga10/clean-architecture-go/src/presentation/protocols"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -32,11 +33,12 @@ func TestNewLoadAccountByIdController(t *testing.T) {
 	assert.NotNil(t, controller)
 }
 
-//func TestController_Handle(t *testing.T) {
-//	var req protocols.Request
-//	controller := LoadAccountByIdControllerSpy()
-//
-//	res := controller.Handle(req)
-//	assert.NotNil(t, res)
-//	assert.Equal(t, res.Code, 200)
-//}
+
+func TestController_Handle(t *testing.T) {
+	var req protocols.Request
+	controller := LoadAccountByIdControllerSpy()
+
+	res := controller.Handle(req)
+	assert.NotNil(t, res)
+	assert.Equal(t, res.Code, 200)
+}
